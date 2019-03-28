@@ -3,3 +3,5 @@ cabal-dev
 *.o
 *.hi
 upload-docs
+tags
+.stack-work

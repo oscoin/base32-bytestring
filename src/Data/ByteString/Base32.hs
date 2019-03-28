@@ -18,42 +18,58 @@ module Data.ByteString.Base32
        , encode
        , decode
        , decodeLenient
+
+       , encTable
+       , decTable
        ) where
 
-import Data.ByteString as BS
-import Data.ByteString.Base32.Internal
-import Data.List as L
+import           Data.ByteString                 as BS
+import           Data.ByteString.Base32.Internal
+import qualified Data.ByteString.Char8           as C8
 
 
 -- | Base32 encoded bytestring.
 type Base32 = ByteString
 
-encW5 :: Word5 -> Word8
-encW5 !x
-  |  x <= 25  = 65 + x
-  | otherwise = 24 + x
-{-# INLINE encW5 #-}
-
 encTable :: EncTable
-encTable = BS.pack $ L.map encW5 [0..31]
+encTable = C8.pack "ybndrfg8ejkmcpqxot1uwisza345h769"
 
 -- | Encode an arbitrary bytestring into (upper case) base32 form.
 encode :: ByteString -> Base32
 encode = unpack5 encTable
 
-decW5 :: Word8 -> Word5
-decW5 !x
-  | x <  50  {- c2w '2' -} = invIx
-  | x <= 55  {- c2w '7' -} = x - 24 {- c2w '2' - 26 -}
-  | x <  65  {- c2w 'A' -} = invIx
-  | x <= 90  {- c2w 'Z' -} = x - 65 {- c2w 'A' -}
-  | x <  97  {- c2w 'a' -} = invIx
-  | x <= 122 {- c2w 'z' -} = x - 97 {- c2w 'a' -}
-  | otherwise = invIx
-{-# INLINE decW5 #-}
 
+-- Taken from <here https://gist.github.com/maaku/8996338#file-common-cpp-L14>.
 decTable :: ByteString
-decTable = BS.pack $ L.map decW5 [minBound .. maxBound]
+decTable = BS.pack [
+      invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx
+    , invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx
+    , invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx
+    , invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx
+    , invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx,    18
+    , invIx,    25,    26,    27,    30,    29,     7,    31, invIx, invIx
+    , invIx, invIx, invIx, invIx, invIx,    24,     1,    12,     3,     8
+    ,     5,     6,    28,    21,     9,    10, invIx,    11,     2,    16
+    ,    13,    14,     4,    22,    17,    19, invIx,    20,    15,     0
+    ,    23, invIx, invIx, invIx, invIx, invIx, invIx,    24,     1,    12
+    ,     3,     8,     5,     6,    28,    21,     9,    10, invIx,    11
+    ,     2,    16,    13,    14,     4,    22,    17,    19, invIx,    20
+    ,    15,     0,    23, invIx, invIx, invIx, invIx, invIx, invIx, invIx
+    , invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx
+    , invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx
+    , invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx
+    , invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx
+    , invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx
+    , invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx
+    , invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx
+    , invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx
+    , invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx
+    , invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx
+    , invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx
+    , invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx
+    , invIx, invIx, invIx, invIx, invIx, invIx
+    ]
+{-# INLINE decTable #-}
 
 -- | Decode a base32 encoded bytestring. This functions is
 -- case-insensitive and do not require correct padding.

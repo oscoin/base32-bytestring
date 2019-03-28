@@ -2,13 +2,12 @@
 {-# OPTIONS -fno-warn-orphans #-}
 module Data.ByteString.Base32Spec (spec) where
 
-import Control.Applicative
-import Data.ByteString as BS
-import Data.ByteString.Char8 as BC
-import Data.ByteString.Base32 as Base32
-import Data.Char
-import Test.Hspec
-import Test.QuickCheck
+import           Data.ByteString        as BS
+import           Data.ByteString.Base32 as Base32
+import           Data.ByteString.Char8  as BC
+import           Data.Char
+import           Test.Hspec
+import           Test.QuickCheck
 
 
 instance Arbitrary ByteString where
@@ -19,7 +18,7 @@ spec = do
   describe "encode" $ do
     it "conform RFC examples" $ do
       encode ""       `shouldBe` ""
-      encode "f"      `shouldBe` "MY======"
+      encode "f"      `shouldBe` "ca"
       encode "fo"     `shouldBe` "MZXQ===="
       encode "foo"    `shouldBe` "MZXW6==="
       encode "foob"   `shouldBe` "MZXW6YQ="
