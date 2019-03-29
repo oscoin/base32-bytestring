@@ -69,7 +69,6 @@ decTable = BS.pack [
     , invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx, invIx
     , invIx, invIx, invIx, invIx, invIx, invIx
     ]
-{-# INLINE decTable #-}
 
 -- | Decode a base32 encoded bytestring. This functions is
 -- case-insensitive and do not require correct padding.

@@ -50,14 +50,11 @@ unpack5Ptr !tbl bs @ (PS fptr off sz) =
     let unpackedSize = dstSize $ BS.length bs
     BS.create unpackedSize $ \ dst -> do
         withForeignPtr fptr $ \ ptr -> do
-          dst_end <- bigStep dst (advancePtr ptr off) sz
-          _ <- fillPadding dst_end (unpackedSize - (dst_end `minusPtr` dst))
+          _dst_end <- bigStep dst (advancePtr ptr off) sz
           return ()
   where
     dstSize x = d + if m == 0 then 0 else 1
       where (d, m) = (x * 8) `quotRem` 5
-
-    fillPadding dst s = memset dst (c2w '=') (fromIntegral s)
 
     bigStep !dst !src !s
       |     s >= 5  = do

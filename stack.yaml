@@ -2,3 +2,7 @@ resolver: lts-13.10
 
 packages:
 - .
+
+extra-deps:
+- tasty-hedgehog-0.2.0.0@sha256:83a8b777fa472040979e44dba43c32441f55d5ddb9641a4d53deee4b0e09fa34
+- tasty-fail-fast-0.0.3@sha256:0a5a850d7fb5aecb9058d847fa1e634357c2b83bad4b31e41ed1ba6c2d2f1828
