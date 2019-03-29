@@ -1,5 +1,5 @@
 -- |
---   Copyright   :  (c) Sam Truzjan 2013
+--   Copyright   :  (c) Sam Truzjan 2013, Oscoin Engineering Team 2019
 --   License     :  BSD3
 --   Maintainer  :  pxqr.sta@gmail.com
 --   Stability   :  stable
@@ -9,11 +9,11 @@
 --   according to RFC 4648. <http://tools.ietf.org/html/rfc4648>
 --
 --   This module recommended to be imported as
---   @import Data.ByteString.Base32 as Base32@ to avoid name clashes
+--   @import Data.ByteString.Base32.Z as Base32@ to avoid name clashes
 --   with @Data.Binary@ or @Data.ByteString.Base64@ modules.
 --
 {-# LANGUAGE BangPatterns #-}
-module Data.ByteString.Base32
+module Data.ByteString.Base32.Z
        ( Base32
        , encode
        , decode

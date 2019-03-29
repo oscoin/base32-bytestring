@@ -1,21 +1,18 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Test.Data.ByteString.Base32 (tests) where
 
-import qualified Data.ByteString        as BS
-import           Data.ByteString.Base32 as Base32
-import           Data.ByteString.Char8  as BC
+import           Data.ByteString.Base32.Z as Base32
+import           Data.ByteString.Char8    as BC
 import           Data.Char
 
-import           System.IO.Unsafe       (unsafePerformIO)
+import           System.IO.Unsafe         (unsafePerformIO)
 
 import           Hedgehog
-import qualified Hedgehog.Gen           as Gen
-import qualified Hedgehog.Range         as Range
+import qualified Hedgehog.Gen             as Gen
+import qualified Hedgehog.Range           as Range
 import           Test.Tasty
 import           Test.Tasty.Hedgehog
 import           Test.Tasty.Hspec
-
-import           Debug.Trace
 
 
 -- The use of 'unsafePerformIO' seems to be \"recommended\" by the library
