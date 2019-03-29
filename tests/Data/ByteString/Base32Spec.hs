@@ -19,27 +19,21 @@ spec = do
     it "conform RFC examples" $ do
       encode ""       `shouldBe` ""
       encode "f"      `shouldBe` "ca"
-      encode "fo"     `shouldBe` "MZXQ===="
-      encode "foo"    `shouldBe` "MZXW6==="
-      encode "foob"   `shouldBe` "MZXW6YQ="
-      encode "fooba"  `shouldBe` "MZXW6YTB"
-      encode "foobar" `shouldBe` "MZXW6YTBOI======"
-
-    it "size always multiple of 8 bytes" $ property $ \bs ->
-      (BS.length (encode bs) `rem` 8) `shouldBe` 0
-
-    it "padding less than 8 bytes" $ property $ \bs ->
-      BC.count '=' bs `shouldSatisfy` (< 8)
+      encode "fo"     `shouldBe` "c3zo"
+      encode "foo"    `shouldBe` "c3zs6"
+      encode "foob"   `shouldBe` "c3zs6ao"
+      encode "fooba"  `shouldBe` "c3zs6aub"
+      encode "foobar" `shouldBe` "c3zs6aubqe"
 
   describe "decode" $ do
     it "conform RFC examples" $ do
-      decode ""                 `shouldBe` Right ""
-      decode "MY======"         `shouldBe` Right "f"
-      decode "MZXQ===="         `shouldBe` Right "fo"
-      decode  "MZXW6==="        `shouldBe` Right "foo"
-      decode "MZXW6YQ="         `shouldBe` Right "foob"
-      decode "MZXW6YTB"         `shouldBe` Right "fooba"
-      decode "MZXW6YTBOI======" `shouldBe` Right "foobar"
+      decode ""           `shouldBe` Right ""
+      decode "ca"         `shouldBe` Right "f"
+      decode "c3zo"       `shouldBe` Right "fo"
+      decode "c3zs6"      `shouldBe` Right "foo"
+      decode "c3zs6ao"    `shouldBe` Right "foob"
+      decode "c3zs6aub"   `shouldBe` Right "fooba"
+      decode "c3zs6aubqe" `shouldBe` Right "foobar"
 
     it "inverse for encode" $ property $ \bs ->
       decode (encode bs) == Right bs
@@ -53,20 +47,21 @@ spec = do
 
   describe "decodeLenient" $ do
     it "conform RFC examples" $ do
-      decodeLenient ""                 `shouldBe` Right ""
-      decodeLenient "MY======"         `shouldBe` Right "f"
-      decodeLenient "MZXQ===="         `shouldBe` Right "fo"
-      decodeLenient  "MZXW6==="        `shouldBe` Right "foo"
-      decodeLenient "MZXW6YQ="         `shouldBe` Right "foob"
-      decodeLenient "MZXW6YTB"         `shouldBe` Right "fooba"
-      decodeLenient "MZXW6YTBOI======" `shouldBe` Right "foobar"
+      decodeLenient ""           `shouldBe` Right ""
+      decodeLenient "ca"         `shouldBe` Right "f"
+      decodeLenient "c3zo"       `shouldBe` Right "fo"
+      decodeLenient  "c3zs6"     `shouldBe` Right "foo"
+      decodeLenient "c3zs6ao"    `shouldBe` Right "foob"
+      decodeLenient "c3zs6aub"   `shouldBe` Right "fooba"
+      decodeLenient "c3zs6aubqe" `shouldBe` Right "foobar"
 
     it "inverse for encode" $ property $ \bs ->
-      decodeLenient (encode bs) == Right bs
+      decodeLenient (encode bs) === Right bs
 
     it "case insensitive" $ property $ \bs ->
-      decodeLenient (BC.map toLower (encode bs)) == Right bs
+      decodeLenient (BC.map toLower (encode bs)) === Right bs
 
     it "skip non alphabet chars" $ do
-      decodeLenient "|"   `shouldBe` Right ""
-      decodeLenient "M|Y" `shouldBe` Right "f"
+      decodeLenient "|"    `shouldBe` Right ""
+      decodeLenient "M"    `shouldBe` Right ""
+      decodeLenient "M|ca" `shouldBe` Right "["

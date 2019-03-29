@@ -5,3 +5,6 @@ cabal-dev
 upload-docs
 tags
 .stack-work
+dist-newstyle
+.ghc.environment*
+cabal.project.freeze

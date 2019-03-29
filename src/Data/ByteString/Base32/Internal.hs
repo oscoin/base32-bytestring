@@ -40,14 +40,6 @@ import           System.IO.Unsafe         (unsafePerformIO)
 
 type Word5 = Word8
 
--- n = 2 ^ d
-padCeilN :: Int -> Int -> Int
-padCeilN !n !x
-  | remd == 0 = x
-  | otherwise = (x - remd) + n
-  where  mask = n - 1
-         remd = x .&. mask
-
 {-----------------------------------------------------------------------
 -- Encoding
 -----------------------------------------------------------------------}
@@ -62,7 +54,7 @@ unpack5Ptr !tbl bs @ (PS fptr off sz) =
           _ <- fillPadding dst_end (unpackedSize - (dst_end `minusPtr` dst))
           return ()
   where
-    dstSize x = padCeilN 8 (d + if m == 0 then 0 else 1)
+    dstSize x = d + if m == 0 then 0 else 1
       where (d, m) = (x * 8) `quotRem` 5
 
     fillPadding dst s = memset dst (c2w '=') (fromIntegral s)
