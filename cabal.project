@@ -1,2 +1,2 @@
 packages:
-    ./z-base32-bytestring.cabal
+    ./base32-z-bytestring.cabal

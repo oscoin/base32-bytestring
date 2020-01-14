@@ -8,8 +8,8 @@ copyright:           (c) 2013, Sam Truzjan, 2019 Oscoin Engineering Team
 category:            Codec, Data
 build-type:          Simple
 cabal-version:       >= 1.10
-homepage:            https://github.com/oscoin/z-base32-bytestring
-bug-reports:         https://github.com/oscoin/z-base32-bytestring/issues
+homepage:            https://github.com/oscoin/base32-z-bytestring
+bug-reports:         https://github.com/oscoin/base32-z-bytestring/issues
 synopsis: Fast z-base32 and z-base32hex codec for ByteStrings
 description:
   base32 and base32hex codec according to RFC4648
@@ -23,12 +23,12 @@ extra-source-files:    README.md
 
 source-repository head
   type:                git
-  location:            git://github.com/oscoin/z-base32-bytestring.git
+  location:            git://github.com/oscoin/base32-z-bytestring.git
   branch:              master
 
 source-repository this
   type:                git
-  location:            git://github.com/oscoin/z-base32-bytestring.git
+  location:            git://github.com/oscoin/base32-z-bytestring.git
   branch:              master
   tag:                 v0.2.1.0
 
@@ -51,7 +51,7 @@ test-suite tests
   main-is:             Main.hs
   other-modules:       Test.Data.ByteString.Base32
   build-depends:       base   == 4.*
-                     , z-base32-bytestring
+                     , base32-z-bytestring
                      , bytestring
                      , hedgehog
                      , tasty
@@ -66,7 +66,7 @@ benchmark bench
   hs-source-dirs:      bench
   main-is:             Main.hs
   build-depends:       base == 4.*
-                     , z-base32-bytestring
+                     , base32-z-bytestring
                      , bytestring
                      , criterion
   ghc-options:         -O2 -Wall -fno-warn-orphans

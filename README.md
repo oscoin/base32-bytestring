@@ -1,4 +1,4 @@
-`z-base32-bytestring` is an efficient [z-base32][rfc] codec for
+`base32-z-bytestring` is an efficient [z-base32][rfc] codec for
 bytestrings. The API is similar to the [base16-bytestring][base16-pkg] and
 [base64-bytestring][base64-pkg] packages.
 
