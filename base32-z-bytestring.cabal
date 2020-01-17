@@ -23,12 +23,12 @@ extra-source-files:    README.md
 
 source-repository head
   type:                git
-  location:            git://github.com/oscoin/z-base32-bytestring.git
+  location:            git://github.com/oscoin/base32-z-bytestring.git
   branch:              master
 
 source-repository this
   type:                git
-  location:            git://github.com/oscoin/z-base32-bytestring.git
+  location:            git://github.com/oscoin/base32-z-bytestring.git
   branch:              master
   tag:                 v0.2.1.0
 
