@@ -45,7 +45,7 @@ type Word5 = Word8
 -----------------------------------------------------------------------}
 
 unpack5Ptr :: Ptr Word8 -> ByteString -> ByteString
-unpack5Ptr !tbl bs @ (PS fptr off sz) =
+unpack5Ptr !tbl bs@(PS fptr off sz) =
   unsafePerformIO $ do
     let unpackedSize = dstSize $ BS.length bs
     BS.create unpackedSize $ \ dst -> do
@@ -136,7 +136,7 @@ cleanup io = unsafePerformIO $
     handler (ErrorCall msg) = return (Left msg)
 
 pack5Ptr :: Ptr Word5 -> ByteString -> Result ByteString
-pack5Ptr !tbl bs @ (PS fptr off sz) =
+pack5Ptr !tbl bs@(PS fptr off sz) =
   cleanup $ do
     let packedSize = dstSize $ BS.length bs
     BS.createAndTrim packedSize $ \ dst -> do
@@ -223,7 +223,7 @@ isInAlphabet !tbl !ix =
   unsafePerformIO (peekByteOff tbl (fromIntegral ix)) /= invIx
 
 pack5Lenient :: DecTable -> ByteString -> Either String ByteString
-pack5Lenient tbl @ (PS fptr _ _) bs =
+pack5Lenient tbl@(PS fptr _ _) bs =
   unsafePerformIO $ do
     withForeignPtr fptr $ \ !tbl_ptr -> do
       return $! pack5 tbl $ BS.filter (isInAlphabet tbl_ptr) bs

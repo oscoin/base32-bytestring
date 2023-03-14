@@ -54,6 +54,7 @@ test-suite tests
                      , base32-z-bytestring
                      , bytestring
                      , hedgehog
+                     , hspec
                      , tasty
                      , tasty-fail-fast
                      , tasty-hedgehog
